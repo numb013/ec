@@ -36,7 +36,8 @@
               'buy_count',
               'sendContact',
               'reset',
-              'password_reset'
+              'password_reset',
+              'password_reset_complete'
               );
       $url = $_SERVER["REQUEST_URI"];
       if (!empty($this->Auth->user('id'))) {

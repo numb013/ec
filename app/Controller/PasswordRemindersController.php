@@ -36,84 +36,72 @@ class PasswordRemindersController extends AppController {
 	public $paginate = array();
 
         
-        public function index() {
-            exit();
-            $this->layout = "default";
-            $data = $this->Shop->find('first',array(
-                'conditions' => array(
-                  'Shop.delete_flag' => '0'
-                ),
-            ));
-            $this->_getParameter();
-            $this->set('data',$data);
-        }        
+
         
-        
- public function sendContact() {
-       mb_language('japanese');
-       mb_internal_encoding('utf-8');
+    public function index() {
+        if ($this->request->is('post')) {
+                mb_language('japanese');
+                mb_internal_encoding('utf-8');
+               //$this->request->data['mail_address'] = 'nakamura01008@decoo.co.jp';
+                     $options = array(
+                             'conditions' =>
+                             array(
+                                     'mail_address' => $this->request->data['PasswordReminders']['email']
+                             ),
+                             'recursive'  => -1
+                     );
+                     $User_data = $this->User->find('first', $options);        
+                     $user = $User_data['User'];
 
-      $this->request->data['mail_address'] = 'nakamura01008@decoo.co.jp';
+                 $key = $this->_getRandomString(32);
+                 $url = "http://localhost/ec/PasswordReminders/reset?key=". $key;
 
-            $options = array(
-                    'conditions' =>
-                    array(
-                            'mail_address' => $this->request->data['mail_address']
-                    ),
-                    'recursive'  => -1
-            );
-            $User_data = $this->User->find('first', $options);        
-            $user = $User_data['User'];
+                 $data['PasswordReminders']['user_id'] = $user['id'];
+                 $data['PasswordReminders']['key'] = $key;
+                 $data['PasswordReminders']['mail_address'] = $user['mail_address'];
+                 $data['PasswordReminders']['limit_time'] = date('Y-m-d H:i:s' , strtotime('+15 minute'));
+                 $this->PasswordReminder->save($data['PasswordReminders']);
 
-        $key = $this->_getRandomString(32);
-        $url = "http://localhost/ec/PasswordReminders/reset?key=". $key;
-
-        $data['PasswordReminders']['user_id'] = $user['id'];
-        $data['PasswordReminders']['key'] = $key;
-        $data['PasswordReminders']['mail_address'] = $user['mail_address'];
-        $data['PasswordReminders']['limit_time'] = date('Y-m-d H:i:s' , strtotime('+15 minute'));
-
-
-        $this->PasswordReminder->save($data['PasswordReminders']);
-       
-      $honbun='';
-    	$honbun.=$content['name']."様\n\nこの度は弊社サイトよりお問い合わせいただき誠に有難う御座います。\n";
-    	$honbun.="担当者より折り返しご連絡させていただきますので 今しばらくお待ちくださいませ。\n";
-    	$honbun.="その他ご不明な点、ご相談等ございましたら お気軽にお問い合わせください。\n";
-    	$honbun.="また、当サイトと関連していない問い合わせについては \n";
-    	$honbun.="ご対応致しかねますので予めご了承のほどお願い申し上げます\n";
-    	$honbun.=$url;
-    	$honbun.="\n";
-
-    	$honbun.="□□□□□□□□□□□□□□□□□\n";
-    	$honbun.="\n";
-    	$honbun.="『FUD-24』簡単で当たる！職業診断係";
-    	$honbun.="\n";
-    	$honbun.="メール oneblow0701@gmail.com\n";
-    	$honbun.="\n";
-    	$honbun.="□□□□□□□□□□□□□□□□□\n";
+         echo $url;
+         exit();        
 
 
-    	$title= 'お問い合わせありがとうございました。';
-    	$header = 'From:FUD-24 簡単で当たる！職業診断';
-        $honbun = html_entity_decode($honbun, ENT_QUOTES, 'UTF-8');
-        $header = mb_encode_mimeheader($header);
+               $honbun='';
+                 $honbun.="いつもお世話になっております。\n";
+                 $honbun.="以下のURLからパスワードを再設定して下さい。\n";
+                 $honbun.=$url;
+                 $honbun.="\n";
 
-  
-      
-   if (mb_send_mail($content['email'], $title, $honbun, $header)) {
-       mb_language('japanese');
-       mb_internal_encoding('utf-8');
+                 $honbun.="□□□□□□□□□□□□□□□□□\n";
+                 $honbun.="\n";
+                 $honbun.="『FUD-24』簡単で当たる！職業診断係";
+                 $honbun.="\n";
+                 $honbun.="メール oneblow0701@gmail.com\n";
+                 $honbun.="\n";
+                 $honbun.="□□□□□□□□□□□□□□□□□\n";
 
-       $title= 'お客様からお問い合わがありました。';
-       $header = 'From:'.$content['email'];
-       $message = html_entity_decode($content['body'], ENT_QUOTES, 'UTF-8');
-       mb_send_mail('oneblow0701@gmail.com' ,$title, $content['body'], $header);
-       return true;
-   } else {
-       return false;
-   }
- }
+
+                 $title= '【】パスワード再設定用リンク';
+                 $header = 'From:FUD-24 簡単で当たる！職業診断';
+                 $honbun = html_entity_decode($honbun, ENT_QUOTES, 'UTF-8');
+                 $header = mb_encode_mimeheader($header);
+
+
+
+            if (mb_send_mail($content['email'], $title, $honbun, $header)) {
+                mb_language('japanese');
+                mb_internal_encoding('utf-8');
+
+                $title= 'お客様からお問い合わがありました。';
+                $header = 'From:'.$content['email'];
+                $message = html_entity_decode($content['body'], ENT_QUOTES, 'UTF-8');
+                mb_send_mail('oneblow0701@gmail.com' ,$title, $content['body'], $header);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 
  
     public static function _getRandomString($nLengthRequired = 10) {
@@ -125,59 +113,74 @@ class PasswordRemindersController extends AppController {
        }
         return $randomStr;
     }
- 
- 
- 
     public function reset() {
       $key = $_GET['key'];
       $limit_time = date('Y-m-d H:i:s');
       $options = array(
-              'conditions' =>
-              array(
-                      'key' => $key,
-                      'limit_time >=' => $limit_time
-              ),
-              'recursive'  => -1
+        'conditions' =>
+        array(
+            'key' => $key,
+            'limit_time >=' => $limit_time
+        ),
+        'recursive'  => -1
       );
+
       $data = $this->PasswordReminder->find('first', $options); 
-      if (!empty($data['PasswordReminder'])) {
+      if ($data['PasswordReminder']['auth_flag'] == 0) {
           $this->Session->write('key', $data['PasswordReminder']['key']);
           $user_id = $data['PasswordReminder']['user_id'];
+          $passwordReminder_id = $data['PasswordReminder']['id'];
           return $this->redirect(
-            array('controller' => 'PasswordReminders', 'action' => 'password_reset', $user_id)
+            array('controller' => 'PasswordReminders', 'action' => 'password_reset', $user_id, $passwordReminder_id)
           );
       } else {
-          exit();
-          $this->render('ec/PasswordReminders/password_error');
+               $this->set('error', 1);
+               $this->render('/ec/PasswordReminders/password_reset_complete');
       }
-
-      echo pr($data);
-      exit();
     }
  
-    public function password_reset($user_id = null) {
+    public function password_reset($user_id = null, $passwordReminder_id = null) {
         if ($this->request->is('post')) {
-           $this->request->data['User']['id'] = $this->request->data['User']['id'];
-           $this->request->data['User']['password'] = $this->request->data['PasswordReminders']['password'];//      $this->request->data['User']['password1'] = $this->request->data['password1'];
-           $this->User->set($this->request->data);
+           $data = $this->request->data;
+           $data['User']['id'] =$data['User']['id'];
+           $data['User']['password'] = $data['PasswordReminders']['password'];
+
+           if ($data['PasswordReminders']['password'] != $data['PasswordReminders']['password1']) {
+               $this->set('PasswordReminders', $data);
+               $this->set('error', 'aaaaa');
+               $this->render('ec/PasswordReminders/password_reset');
+           }
+
+           $this->User->set($data);
            if ($this->User->validates()) {
-                 if ($this->User->save()) {
-                     return $this->redirect(
-                       array('controller' => 'Users', 'action' => 'login')
-                     );
-                 }
+               if ($this->User->save()) {
+                   $reminde['id'] = $data['passwordReminder']['id'];
+                   $reminde['auth_flag'] = 1; 
+                   $this->PasswordReminder->set($reminde);
+                   if ($this->PasswordReminder->save()) {     
+                      return $this->redirect(
+                        array('controller' => 'PasswordReminders', 'action' => 'password_reset_complete')
+                      );
+                   }
+               }
            } else {
              return false;
            }
          }
+
          if (empty($this->Session->read('key'))) {
-            echo 'アウト';
-            exit();
+
+               $this->set('error', 2);
+               $this->render('/ec/PasswordReminders/password_reset_complete');
          }
          $this->Session->delete('key');
-         $this->set('user_id', $user_id);
+         $this->set(compact( "user_id", "passwordReminder_id"));
     }
- 
+
+    public function password_reset_complete() {
+    exit();
+    }
+    
  
 /**/
 /*登録箇所
