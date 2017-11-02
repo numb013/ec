@@ -33,7 +33,10 @@
               'no_menber_buy', 
               'no_member_buy_confirm',
               'buy_complete',
-              'buy_count'
+              'buy_count',
+              'sendContact',
+              'reset',
+              'password_reset'
               );
       $url = $_SERVER["REQUEST_URI"];
       if (!empty($this->Auth->user('id'))) {

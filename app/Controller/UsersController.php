@@ -149,7 +149,7 @@ public function user_edit() {
      if ($this->request->is('post')) {
          if ($this->Auth->login()) {
              echo pr($this->Auth->redirect());
-             exit();
+
             $this->redirect($this->Auth->redirect());
             
          } else {
