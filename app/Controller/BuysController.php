@@ -51,7 +51,16 @@ class BuysController extends AppController {
      * @return void
      */
     public function menber_buy() {
-        $items = $this->Session->read('Item');
+        if ($this->request->is('post')) {
+            foreach ($this->request->data['Item'] as $key => $value) {
+               $items['id'][$key] = $value['id'];
+               $items['count'][$key] = $value['count'];
+               $this->Session->write('Item.id.'.$key, $value['id']);
+               $this->Session->write('Item.count.'.$key, $value['count']);
+            }
+        } else {
+            $items = $this->Session->read('Item');
+        }
         $this->_getParameter();
     } 
 
@@ -64,8 +73,6 @@ class BuysController extends AppController {
         }
     } 
 
-    
-
     public function buy_confirm() {
 
         if ($this->request->is('post')) {
@@ -75,9 +82,7 @@ class BuysController extends AppController {
                   array('controller' => 'carts', 'action' => 'index/form_menu')
                 );
              } elseif (isset($this->request->data['confirm'])) {
-
                 $this->_getItem();
-                
                 $select = $this->request->data;
                 if ($select['Buys']['shipoption'] == 1) {
                     $select['Buys']['shipoption_date'] = $select['Buys']['month'].$select['Buys']['date'];
@@ -186,9 +191,6 @@ class BuysController extends AppController {
                  $total['price'] = $total['price'] + $datas[$key]['Item']['total_price'];
                  $total['count'] = $total['count'] + $datas[$key]['Item']['count'];
              }
-
-        
-             
              $this->set(compact("datas", "total"));
               return $total;
         }

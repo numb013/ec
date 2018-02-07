@@ -93,13 +93,13 @@
                   <tr>
                     <th>住所1</th>
                     <td>
-                      <?php echo $this->Form->input('User.address_1', array('label' => false, 'div' => false)); ?>
+                      <?php echo $this->Form->input('User.address1', array('label' => false, 'div' => false)); ?>
                     </td>
                   </tr>
                   <tr>
                     <th>住所2</th>
                     <td>
-                      <?php echo $this->Form->input('User.address_2', array('label' => false, 'div' => false)); ?>
+                      <?php echo $this->Form->input('User.address2', array('label' => false, 'div' => false)); ?>
                     </td>
                   </tr>
                   <tr>

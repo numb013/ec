@@ -76,16 +76,12 @@ echo pr($member);
                     <td><?php echo $member['zip']; ?></td>
                   </tr>
                   <tr>
-                    <th>都道府県</th>
-                    <td><?php echo $prefectures[$member['prefecture'][0]]; ?></td>
-                  </tr>
-                  <tr>
                     <th>住所1</th>
-                    <td><?php echo $member['address_1']; ?></td>
+                    <td><?php echo $member['address1']; ?></td>
                   </tr>
                   <tr>
                     <th>住所2</th>
-                    <td><?php echo $member['address_2']; ?></td>
+                    <td><?php echo $member['address2']; ?></td>
                   </tr>
                   <tr>
                     <th>電話番号</th>

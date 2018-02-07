@@ -3,10 +3,6 @@
     <title>Index Page</title>
   </head>
   <body>
-
-
-      
-      
     <h1>Edit Page</h1>
     <p>MySampleData Edit Form.</p>
     <?php echo $this->Form->create('Item', array('type' => 'file', 'url' => 'regist')); ?>

@@ -2,6 +2,7 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
+<!--
                                 <h1 itemprop="name">
                                     <?php if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs'): ?>
                                       <a href="/ec/">
@@ -11,6 +12,7 @@
                                     FDU<span>-</span>24
                                   </a>
                                 </h1>
+-->
 				<nav role="navigation">
                                     <ul id="menu">
                                         <li><a href="/ec/items">online shop</a></li>

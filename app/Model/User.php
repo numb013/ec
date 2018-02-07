@@ -62,7 +62,7 @@
 //                 'message' => 'A username is required'
 //             )
 //         ),
-         'address_1' => array(
+         'address1' => array(
              'required' => array(
                  'rule' => 'notBlank',
                  'message' => 'A username is required'

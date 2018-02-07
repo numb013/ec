@@ -181,6 +181,7 @@
 
       var todoNum = 1;
       function addPhoto(){
+
           var txt = '<div id="'+ 'Image' + todoNum + '">'
               + '<?php echo $this->Form->input("Image.'  + todoNum +  '", array("type" => "file", "label" => false)); ?>'
               + '<input type="button" value="削除" onclick="del(' + todoNum + ');">'

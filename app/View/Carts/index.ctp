@@ -6,7 +6,7 @@
 <?php if(!empty($datas)): ?>
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="col-md-offset-0 text-center fh5co-heading" style="clear: both;">
-                  <?php foreach ($datas as $data): ?>
+                  <?php foreach ($datas as $key => $data): ?>
                     <div class="job-memu">
                       <a href="/ec/items/detail/<?php echo $data['Item']['id']; ?>">
                         <div class="photo-cut">
@@ -23,7 +23,7 @@
                       </a>
                           <div class="part">
                             <p class="job_step">
-                              <?php echo $this->Form->input('Item.count', array(
+                              <?php echo $this->Form->input('Item.'.$key.'.count', array(
                                   'type' => 'select',
                                   'label' => false,
                                   'div' => false,
@@ -49,13 +49,14 @@
                           </div>
                         <a href="/ec/carts/index/delete/<?php echo $data['Item']['id']; ?>" class="btn">削除</a>
                     </div>
+                  <?php echo $this->Form->hidden('Item.'.$key.'.id', array('value' => $data['Item']['id'])); ?>
                   <?php endforeach; ?>
                 </div>                
             </div>
                 <p>合計:<span class="total_count"><?php echo $total['count']; ?></span>個</p>
                 <p>合計金額:<span class="total_price"><?php echo $total['price']; ?></span>円</p>
 
-                <?php echo $this->Form->hidden('Item.id', array('value' => $data['Item']['id'])); ?>
+
                 <?php if (!empty($member)): ?>
                     <?php echo $this->Form->input('購入へ', array('type' => 'submit', 'label' => false, 'div' => false, 'class' => 'btn_submit')); ?>
                 <?php else: ?>

@@ -259,12 +259,13 @@ p.parameter {
 }
 
 .parameter-frame a {
-  font-family: 'Denk One', Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+/*  font-family: 'Denk One', Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+*/
 }
 
 h1, h2, h3, h4, h5, figure {
   color: #000;
-  font-family: 'Denk One', Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  /*font-family: 'Denk One', Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;*/
   font-weight: 400;
   letter-spacing: -0.3px;
 }
@@ -288,7 +289,7 @@ section h2 {
 h3 {
   margin-top: 10px;
   margin-bottom: 5px;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 ul {
   padding: 0px;
@@ -348,7 +349,7 @@ h2.rss_title {
 .fh5co-cta p.occupation_diagnosis {
   font-size: 20px;
   color: #000;
-  font-family: 'Denk One', sans-serif;
+  /*font-family: 'Denk One', sans-serif;*/
 }
 
 .occupation_link {
@@ -435,7 +436,7 @@ div.buttom_edit {
 }
 
 .btn {
-  font-family: 'Denk One', Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  /*font-family: 'Denk One', Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;*/
   font-size: 16px;
   font-weight: 400;
   -webkit-border-radius: 3px;
@@ -930,7 +931,7 @@ li.core_text {
 
 .btn_submit{
   padding: 15px 50px;
-  background: #369840;
+    background: #ccc;
   text-transform:uppercase;
   color:#fff;
   cursor:pointer;
@@ -1144,7 +1145,7 @@ margin-top: 5px;
   }
   .btn_submit{
     padding: 25px 280px;
-    background: #369840;
+    background: #ccc;
     text-transform:uppercase;
     font-weight:bold;
     color:#fff;
@@ -1307,7 +1308,7 @@ margin-top: 5px;
 
   .btn_submit{
     padding: 25px 280px;
-    background: #369840;
+    background: #ccc;
     text-transform:uppercase;
     color:#fff;
     cursor:pointer;

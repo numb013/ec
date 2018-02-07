@@ -49,7 +49,9 @@ class CartsController extends AppController {
         if ($this->request->is('post')) {
             if (!empty($this->request->data['Item']['token'])) {
                 if ($this->Session->read('token') != $this->request->data['Item']['token']) {
+
                     $this->Session->write('token', $this->request->data['Item']['token']);
+
                     if (!empty($this->Session->read('Item'))) {
                         $Item = $this->Session->read('Item');
                         $match_flag = 0;
@@ -71,7 +73,9 @@ class CartsController extends AppController {
                         $this->Session->write('Item.id.0', $this->request->data['Item']['id']);
                         $this->Session->write('Item.count.0', $this->request->data['Item']['count']);
                     }
+
                 }
+
             }            
         } elseif ($para == 'delete') {
         $items = $this->Session->read('Item');
@@ -82,7 +86,6 @@ class CartsController extends AppController {
                     unset($items['count'][$key]);
                 }
             }
-            
         }
         if (!empty($items['id'])) {
             $items['id'] = array_merge($items['id']);
@@ -95,7 +98,9 @@ class CartsController extends AppController {
         }
     } elseif ($para == 'form_menu') {
             $this->_getItem();
+            $this->render('/carts/index');
     } else {
+
         $this->Session->delete('Item');
         $this->render('/carts/index');
     }
@@ -110,9 +115,7 @@ class CartsController extends AppController {
      * @return void
      */
     public function buy() {
-
-$total = $this->_getItem();
-echo pr($total);
+        $total = $this->_getItem();
         if ($this->request->is('post')) {
 
         }
@@ -147,8 +150,8 @@ echo pr($total);
                  $total['price'] = $total['price'] + $datas[$key]['Item']['total_price'];
                  $total['count'] = $total['count'] + $datas[$key]['Item']['count'];
              }
-              $this->set(compact("datas", "total"));
-              return $total;
+             $this->set(compact("datas", "total"));
+             return $total;
         }
 
     }
@@ -161,33 +164,33 @@ echo pr($total);
      * @return void
      */
     public function buy_count() {
-            if (!$this->request->is('ajax')) {
-                    throw new NotFoundException('お探しのページは見つかりませんでした。');
-            }
-            $this->autoRender = false;
-            $data = array();
-            $data['id'] =  $this->request->data['Item']['id'];
-            $data['count'] = $this->request->data['Item']['count'];
-            $Item = $this->Session->read('Item');
+        if (!$this->request->is('ajax')) {
+                throw new NotFoundException('お探しのページは見つかりませんでした。');
+        }
+        $this->autoRender = false;
+        $data = array();
+        $data['id'] =  $this->request->data['Item']['id'];
+        $data['count'] = $this->request->data['Item']['count'];
+        $Item = $this->Session->read('Item');
 
-            foreach ($Item['id'] as $key => $value) {
-                if ($data['id'] == $value) {
-                    $this->Session->write('Item.count.'.$key, $data['count']);
-                }
+        foreach ($Item['id'] as $key => $value) {
+            if ($data['id'] == $value) {
+                $this->Session->write('Item.count.'.$key, $data['count']);
             }
-            $total = $this->_getItem();
-            header('Content-type: application/json');//指定されたデータタイプに応じたヘッダーを出力する
-            echo json_encode( $total );
+        }
+        $total = $this->_getItem();
+        header('Content-type: application/json');//指定されたデータタイプに応じたヘッダーを出力する
+        echo json_encode( $total );
     }       
 
     public function _getParameter() {
-            $item_genres = $this->Master->getItemGenres();
-            $genre = $this->Master->getGenre();
-            $seasons = $this->Master->getSeason();
-            $size = $this->Master->getSize();
-            $discounts = $this->Master->getDiscount();
-            $this->set(compact("item_genres", "genre", "seasons", "size", "discounts"));
-            return;
+        $item_genres = $this->Master->getItemGenres();
+        $genre = $this->Master->getGenre();
+        $seasons = $this->Master->getSeason();
+        $size = $this->Master->getSize();
+        $discounts = $this->Master->getDiscount();
+        $this->set(compact("item_genres", "genre", "seasons", "size", "discounts"));
+        return;
     }    
     
     

@@ -56,6 +56,9 @@ class UsersController extends AppController {
          if ($this->Auth->login()) {
             $this->Cookie->write('Auth.User', $this->request->data['User'], false, '+4 weeks');
             $url = $this->Auth->redirect();
+            if(strpos($url,'admin') !== false) {
+                $url = '/Users/mypage';
+            }
             $this->redirect($url);
             exit();
          } else {

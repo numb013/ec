@@ -78,19 +78,14 @@
                     <?php echo $this->Form->hidden('User.zip', array('value' => $data['User']['zip'])); ?>
                   </tr>
                   <tr>
-                    <th>都道府県</th>
-                    <td><?php echo $data['User']['prefecture'][0]; ?></td>
-                    <?php echo $this->Form->hidden('User.prefecture', array('value' => $data['User']['prefecture'][0])); ?>
-                  </tr>
-                  <tr>
                     <th>住所1</th>
-                    <td><?php echo $data['User']['address_1']; ?></td>
-                    <?php echo $this->Form->hidden('User.address_1', array('value' => $data['User']['address_1'])); ?>
+                    <td><?php echo $data['User']['address1']; ?></td>
+                    <?php echo $this->Form->hidden('User.address1', array('value' => $data['User']['address1'])); ?>
                   </tr>
                   <tr>
                     <th>住所2</th>
-                    <td><?php echo $data['User']['address_2']; ?></td>
-                    <?php echo $this->Form->hidden('User.address_2', array('value' => $data['User']['address_2'])); ?>
+                    <td><?php echo $data['User']['address2']; ?></td>
+                    <?php echo $this->Form->hidden('User.address2', array('value' => $data['User']['address2'])); ?>
                   </tr>
                   <tr>
                     <th>電話番号</th>

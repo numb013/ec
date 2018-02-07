@@ -70,8 +70,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 					</button>
-					<div class="navbar-brand">
-						<?php echo $this->Html->link('FDU_24', array('controller' => 'Dashboards', 'action' => 'index', 'class' => "navbar-brand")); ?>
+					<div class="navbar-brand" style="background-color: #000;">
+<!-- 						<?php echo $this->Html->link('FDU_24', array('controller' => 'Dashboards', 'action' => 'index', 'class' => "navbar-brand")); ?> -->
 					</div>
 			</div>
 <div style="color: white;
@@ -87,7 +87,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<div class="sidebar-collapse">
 		<ul class="nav" id="main-menu">
 			<li class="text-center">
-			<?php echo $this->Html->link($this->Html->image('find_user.png'),array('controller'=>'user','action'=>'regist'),array('escape'=>false));?>
+<!-- 			<?php echo $this->Html->link($this->Html->image('find_user.png'),array('controller'=>'user','action'=>'regist'),array('escape'=>false));?> -->
 			</li>
 			<li>
 				<?php echo $this->Html->link('管理画面TOP', array('controller' => 'Dashboards', 'action' => 'index')); ?>

@@ -9,8 +9,8 @@
   <div class="job-img">
       <div class="fh5co-copy col-md-12 img-responsive">
           <h1 class="item_title"><?php echo $datas['Item']['item_name']; ?></h1>
-        <?php echo $this->Html->image($datas['Image'][0]['Image']['url'] ,array('width' => '100%', 'class' => "work-img")); ?>
-        <?php echo $this->Html->image($datas['Image'][0]['Image']['url'] ,array('class' => "yoko")); ?>
+        <?php echo $this->Html->image($datas['Image'][0]['Image']['url'] ,array('width' => '20%', 'class' => "work-img")); ?>
+        <?php echo $this->Html->image($datas['Image'][0]['Image']['url'] ,array('class' => "yoko", 'width' => '20%')); ?>
       </div>
   </div>
 

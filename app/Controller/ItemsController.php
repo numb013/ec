@@ -30,19 +30,19 @@ App::uses('File', 'Utility');
  * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
  */
 class ItemsController extends AppController {
+
 	public $uses = array('Item', 'Image', 'Genre', 'ItemGenre');
 	public $components = array('Search.Prg', 'Session', 'Master');
 	public $presetVars = true;
 	public $paginate = array();
 
-
 	public function index($para = null) {
-                $this->layout = 'default';
+    $this->layout = 'default';
 		$this->paginate = array(
 			'limit' => 5,
 		);
 		$this->Prg->commonProcess();
-                $this->paginate['conditions'] = $this->Item->parseCriteria($this->passedArgs);
+    $this->paginate['conditions'] = $this->Item->parseCriteria($this->passedArgs);
 		if (empty($this->request->data)) {
 			// 初期表示時
 			$this->paginate = array(
@@ -58,12 +58,13 @@ class ItemsController extends AppController {
 		}
 
 		$datas = $this->paginate();
-                foreach ($datas as $key => $data) {
+    foreach ($datas as $key => $data) {
 			$datas[$key]['Item']['item_genre'] = explode(",", $data['Item']['item_genre']);
 			$datas[$key]['Item']['genre'] = $data['Item']['genre'];
 		}
 		$this->_getParameter();
 		$this->set('datas',$datas);
+    $this->render('/items/index');
 	}
 
   public function search_more($para = null) {
@@ -71,6 +72,7 @@ class ItemsController extends AppController {
 		$this->_getParameter();
 		$back_flag = 1;
     $this->set(compact('datas', 'para', 'param', 'back_flag'));
+    $this->render('/items/search_more');
 	}
 
 
