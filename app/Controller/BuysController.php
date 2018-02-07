@@ -117,8 +117,14 @@ class BuysController extends AppController {
 
     public function buy_complete() {
 
+
+
+
         if ($this->request->is('post')) {
-            if (isset($this->request->data['back'])) {
+
+
+
+            if (!empty($this->request->data['back'])) {
                 if (!empty($this->Auth->user())) {
                     return $this->redirect(
                       array('controller' => 'buys', 'action' => 'menber_buy')
@@ -129,9 +135,14 @@ class BuysController extends AppController {
                     );
                 }
             } elseif (isset($this->request->data['regist'])) {
+
+
                 $total = $this->_getItem();
                 $items = $this->Session->read('Item');
                 $data = $this->request->data;
+
+
+
                 if (!empty($member)) {
                     $data['Buys']['user_id'] = $this->Auth->user('id');
                 } else {
@@ -151,7 +162,7 @@ class BuysController extends AppController {
                     $this->Buy->save($data['Buys']);
                     
                     //$this->_send_complete($items, $total);
-                    
+
                     $this->Session->delete('Item');
                     return $this->redirect(
                       array('controller' => 'buys', 'action' => 'buy_complete')
@@ -161,9 +172,47 @@ class BuysController extends AppController {
                   $this->set('data',$data);
                   $this->render('/users/user_edit');
                 }
-            }
+            } elseif (isset($this->request->data['credit'])) {
+
+                $total = $this->_getItem();
+                $items = $this->Session->read('Item');
+                $data = $this->request->data;
+
+
+
+                if (!empty($member)) {
+                    $data['Buys']['user_id'] = $this->Auth->user('id');
+                } else {
+                    $data['Buys']['user_id'] = '99999';
+                }
+                $data['Buys']['buy_item_ids'] = implode(",", $items['id']);
+                $data['Buys']['buy_item_counts'] = implode(",", $items['count']);
+                $data['Buys']['price'] = $total['price'];
+                $data['Buys']['count'] = $total['count'];
+                if($data['Buys']['shipoption'] == 0) {
+                    $data['Buys']['shipoption_date'] = date("Y-m-d H:i:s", strtotime("+3 day"));
+                }
+
+                $this->Buy->set($data);
+                // 2. モデル[ModelName]のvalidatesメソッドを使ってバリデーションを行う。
+                if ($this->Buy->validates()) {
+                    $this->Buy->save($data['Buys']);
+                    
+                    //$this->_send_complete($items, $total);
+
+                    $this->Session->delete('Item');
+                    return $this->redirect(
+                      array('controller' => 'buys', 'action' => 'buy_complete')
+                    );
+                } else {
+                    exit();
+                  $this->set('data',$data);
+                  $this->render('/users/user_edit');
+                }
+
         }
     }
+}
 
     public function _getItem() {
         $items = $this->Session->read('Item');
