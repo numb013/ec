@@ -42,7 +42,6 @@ class CartsController extends AppController {
     public $presetVars = true;
     public $paginate = array();    
     
-    
     public function index($para = null, $id = null) {
         $this->_getParameter();
         $this->set('title_for_layout', 'カート');
@@ -51,7 +50,6 @@ class CartsController extends AppController {
                 if ($this->Session->read('token') != $this->request->data['Item']['token']) {
 
                     $this->Session->write('token', $this->request->data['Item']['token']);
-
                     if (!empty($this->Session->read('Item'))) {
                         $Item = $this->Session->read('Item');
                         $match_flag = 0;
@@ -101,7 +99,9 @@ class CartsController extends AppController {
             $this->render('/carts/index');
     } else {
 
-        $this->Session->delete('Item');
+//exit('ssss');
+
+        //$this->Session->delete('Item');
         $this->render('/carts/index');
     }
     $this->_getItem();
@@ -150,6 +150,7 @@ class CartsController extends AppController {
                  $total['price'] = $total['price'] + $datas[$key]['Item']['total_price'];
                  $total['count'] = $total['count'] + $datas[$key]['Item']['count'];
              }
+
              $this->set(compact("datas", "total"));
              return $total;
         }

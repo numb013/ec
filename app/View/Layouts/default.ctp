@@ -50,7 +50,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
-        <link rel="shortcut icon" href="/img/favicon.ico">
+<!--         <link rel="shortcut icon" href="/img/favicon.ico"> -->
         <link rel="apple-touch-icon-precomposed" href="/img/180.png">
         <meta name="description" content="まだあなたが知らないだけで、この世界には色々な職業が存在します。「FDU-24:簡単で当たる！職業診断」はコアでマイナーで珍しい職業を紹介する職業診断を個性としています、もしかしたらあなたの能力が発揮できる職業が見つかるかもしれません。">
         <meta name="google-site-verification" content="x353_ujDJJV6H__kTHhDVCtuDklhAc5OQ5pHIx23fUI" />

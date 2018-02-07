@@ -37,6 +37,7 @@ class ItemsController extends AppController {
 	public $paginate = array();
 
 	public function index($para = null) {
+
     $this->layout = 'default';
 		$this->paginate = array(
 			'limit' => 5,

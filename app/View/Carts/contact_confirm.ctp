@@ -6,11 +6,6 @@
 
    ?>
 
-
-
-
-
-
   <?php echo $this->Form->create('contacts', array('type' => 'file', 'url' =>  'index')); ?>
 
   <div class="fh5co-contact animate-box">

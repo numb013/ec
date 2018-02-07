@@ -47,7 +47,7 @@
                                )); ?>
                             </p>
                           </div>
-                        <a href="/ec/carts/index/delete/<?php echo $data['Item']['id']; ?>" class="btn">削除</a>
+                        <a href="/ec/carts/index/delete/<?php echo $data['Item']['id']; ?>" class="btn">削除<?php echo $data['Item']['id']; ?></a>
                     </div>
                   <?php echo $this->Form->hidden('Item.'.$key.'.id', array('value' => $data['Item']['id'])); ?>
                   <?php endforeach; ?>

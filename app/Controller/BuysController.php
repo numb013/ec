@@ -51,16 +51,17 @@ class BuysController extends AppController {
      * @return void
      */
     public function menber_buy() {
-        if ($this->request->is('post')) {
-            foreach ($this->request->data['Item'] as $key => $value) {
-               $items['id'][$key] = $value['id'];
-               $items['count'][$key] = $value['count'];
-               $this->Session->write('Item.id.'.$key, $value['id']);
-               $this->Session->write('Item.count.'.$key, $value['count']);
-            }
-        } else {
-            $items = $this->Session->read('Item');
-        }
+        // if ($this->request->is('post')) {
+        //     foreach ($this->request->data['Item'] as $key => $value) {
+        //        $items['id'][$key] = $value['id'];
+        //        $items['count'][$key] = $value['count'];
+        //        $this->Session->write('Item.id.'.$key, $value['id']);
+        //        $this->Session->write('Item.count.'.$key, $value['count']);
+        //     }
+        // } else {
+        //     $items = $this->Session->read('Item');
+        // }
+        $items = $this->Session->read('Item');
         $this->_getParameter();
     } 
 

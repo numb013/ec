@@ -1,11 +1,4 @@
 <div class="row">
-  <?php
-
-  //echo pr($datas);
-  //exit();
-
-   ?>
-
   <div class="job-img">
       <div class="fh5co-copy col-md-12 img-responsive">
           <h1 class="item_title"><?php echo $datas['Item']['item_name']; ?></h1>
