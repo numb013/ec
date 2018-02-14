@@ -35,152 +35,148 @@ class PasswordRemindersController extends AppController {
 	public $presetVars = true;
 	public $paginate = array();
 
-        
-
-        
-    public function index() {
-        if ($this->request->is('post')) {
-                mb_language('japanese');
-                mb_internal_encoding('utf-8');
-               //$this->request->data['mail_address'] = 'nakamura01008@decoo.co.jp';
-                     $options = array(
-                             'conditions' =>
-                             array(
-                                     'mail_address' => $this->request->data['PasswordReminders']['email']
-                             ),
-                             'recursive'  => -1
-                     );
-                     $User_data = $this->User->find('first', $options);        
-                     $user = $User_data['User'];
-
-                 $key = $this->_getRandomString(32);
-                 $url = "http://localhost/PasswordReminders/reset?key=". $key;
-
-                 $data['PasswordReminders']['user_id'] = $user['id'];
-                 $data['PasswordReminders']['key'] = $key;
-                 $data['PasswordReminders']['mail_address'] = $user['mail_address'];
-                 $data['PasswordReminders']['limit_time'] = date('Y-m-d H:i:s' , strtotime('+15 minute'));
-                 $this->PasswordReminder->save($data['PasswordReminders']);
-
-         echo $url;
-         exit();        
+  public function index() {
 
 
-               $honbun='';
-                 $honbun.="いつもお世話になっております。\n";
-                 $honbun.="以下のURLからパスワードを再設定して下さい。\n";
-                 $honbun.=$url;
-                 $honbun.="\n";
+//項目はアカウントDI
+//メールアドレス
 
-                 $honbun.="□□□□□□□□□□□□□□□□□\n";
-                 $honbun.="\n";
-                 $honbun.="『FUD-24』簡単で当たる！職業診断係";
-                 $honbun.="\n";
-                 $honbun.="メール oneblow0701@gmail.com\n";
-                 $honbun.="\n";
-                 $honbun.="□□□□□□□□□□□□□□□□□\n";
+    if ($this->request->is('post')) {
+      mb_language('japanese');
+      mb_internal_encoding('utf-8');
+     //$this->request->data['mail_address'] = 'nakamura01008@decoo.co.jp';
+       $options = array(
+         'conditions' =>
+         array(
+          'mail_address' => $this->request->data['PasswordReminders']['email']
+         ),
+         'recursive'  => -1
+       );
+       $User_data = $this->User->find('first', $options);        
+       $user = $User_data['User'];
 
+       $key = $this->_getRandomString(32);
+       $url = "http://www.oneblow.shop/PasswordReminders/reset?key=". $key;
 
-                 $title= '【】パスワード再設定用リンク';
-                 $header = 'From:FUD-24 簡単で当たる！職業診断';
-                 $honbun = html_entity_decode($honbun, ENT_QUOTES, 'UTF-8');
-                 $header = mb_encode_mimeheader($header);
+       $data['PasswordReminders']['user_id'] = $user['id'];
+       $data['PasswordReminders']['key'] = $key;
+       $data['PasswordReminders']['mail_address'] = $user['mail_address'];
+       $data['PasswordReminders']['limit_time'] = date('Y-m-d H:i:s' , strtotime('+15 minute'));
+       $this->PasswordReminder->save($data['PasswordReminders']);
 
+     $honbun='';
+       $honbun.="いつもお世話になっております。\n";
+       $honbun.="以下のURLからパスワードを再設定して下さい。\n";
+       $honbun.=$url;
+       $honbun.="\n";
 
+       $honbun.="□□□□□□□□□□□□□□□□□\n";
+       $honbun.="\n";
+       $honbun.="『FUD-24』簡単で当たる！職業診断係";
+       $honbun.="\n";
+       $honbun.="メール oneblow0701@gmail.com\n";
+       $honbun.="\n";
+       $honbun.="□□□□□□□□□□□□□□□□□\n";
 
-            if (mb_send_mail($content['email'], $title, $honbun, $header)) {
-                mb_language('japanese');
-                mb_internal_encoding('utf-8');
+       $title= '【】パスワード再設定用リンク';
+       $header = 'From:FUD-24 簡単で当たる！職業診断';
+       $honbun = html_entity_decode($honbun, ENT_QUOTES, 'UTF-8');
+       $header = mb_encode_mimeheader($header);
 
-                $title= 'お客様からお問い合わがありました。';
-                $header = 'From:'.$content['email'];
-                $message = html_entity_decode($content['body'], ENT_QUOTES, 'UTF-8');
-                mb_send_mail('oneblow0701@gmail.com' ,$title, $content['body'], $header);
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
+      if (mb_send_mail($this->request->data['PasswordReminders']['email'], $title, $honbun, $header)) {
+          mb_language('japanese');
+          mb_internal_encoding('utf-8');
 
- 
-    public static function _getRandomString($nLengthRequired = 10) {
-       $charList = 'abcdefghijklmnopqrstuvwxyz0123456789';
-       mt_srand();
-       $randomStr = '';
-       for ($i = 0; $i < $nLengthRequired; $i++) {
-           $randomStr .= $charList[mt_rand(0, strlen($charList) - 1)];
-       }
-        return $randomStr;
-    }
-    public function reset() {
-      $key = $_GET['key'];
-      $limit_time = date('Y-m-d H:i:s');
-      $options = array(
-        'conditions' =>
-        array(
-            'key' => $key,
-            'limit_time >=' => $limit_time
-        ),
-        'recursive'  => -1
-      );
-
-      $data = $this->PasswordReminder->find('first', $options); 
-      if ($data['PasswordReminder']['auth_flag'] == 0) {
-          $this->Session->write('key', $data['PasswordReminder']['key']);
-          $user_id = $data['PasswordReminder']['user_id'];
-          $passwordReminder_id = $data['PasswordReminder']['id'];
-          return $this->redirect(
-            array('controller' => 'PasswordReminders', 'action' => 'password_reset', $user_id, $passwordReminder_id)
-          );
+          $title= 'お客様からお問い合わがありました。';
+          $header = 'From:'.$this->request->data['PasswordReminders']['email'];
+          $message = html_entity_decode($honbun, ENT_QUOTES, 'UTF-8');
+          mb_send_mail('oneblow0701@gmail.com' ,$title, $message, $header);
+          return true;
       } else {
-               $this->set('error', 1);
-               $this->render('/PasswordReminders/password_reset_complete');
+        return false;
       }
     }
- 
-    public function password_reset($user_id = null, $passwordReminder_id = null) {
-        if ($this->request->is('post')) {
-           $data = $this->request->data;
-           $data['User']['id'] =$data['User']['id'];
-           $data['User']['password'] = $data['PasswordReminders']['password'];
+  }
 
-           if ($data['PasswordReminders']['password'] != $data['PasswordReminders']['password1']) {
-               $this->set('PasswordReminders', $data);
-               $this->set('error', 'aaaaa');
-               $this->render('ec/PasswordReminders/password_reset');
-           }
+  public static function _getRandomString($nLengthRequired = 10) {
+     $charList = 'abcdefghijklmnopqrstuvwxyz0123456789';
+     mt_srand();
+     $randomStr = '';
+     for ($i = 0; $i < $nLengthRequired; $i++) {
+         $randomStr .= $charList[mt_rand(0, strlen($charList) - 1)];
+     }
+      return $randomStr;
+  }
 
-           $this->User->set($data);
-           if ($this->User->validates()) {
-               if ($this->User->save()) {
-                   $reminde['id'] = $data['passwordReminder']['id'];
-                   $reminde['auth_flag'] = 1; 
-                   $this->PasswordReminder->set($reminde);
-                   if ($this->PasswordReminder->save()) {     
-                      return $this->redirect(
-                        array('controller' => 'PasswordReminders', 'action' => 'password_reset_complete')
-                      );
-                   }
+  public function reset() {
+    $key = $_GET['key'];
+    $limit_time = date('Y-m-d H:i:s');
+    $options = array(
+      'conditions' =>
+      array(
+          'key' => $key,
+          'limit_time >=' => $limit_time
+      ),
+      'recursive'  => -1
+    );
+
+    $data = $this->PasswordReminder->find('first', $options); 
+    if ($data['PasswordReminder']['auth_flag'] == 0) {
+        $this->Session->write('key', $data['PasswordReminder']['key']);
+        $user_id = $data['PasswordReminder']['user_id'];
+        $passwordReminder_id = $data['PasswordReminder']['id'];
+        return $this->redirect(
+          array('controller' => 'PasswordReminders', 'action' => 'password_reset', $user_id, $passwordReminder_id)
+        );
+    } else {
+             $this->set('error', 1);
+             $this->render('/PasswordReminders/password_reset_complete');
+    }
+  }
+
+  public function password_reset($user_id = null, $passwordReminder_id = null) {
+    if ($this->request->is('post')) {
+       $data = $this->request->data;
+       $data['User']['id'] =$data['User']['id'];
+       $data['User']['password'] = $data['PasswordReminders']['password'];
+
+       if ($data['PasswordReminders']['password'] != $data['PasswordReminders']['password1']) {
+           $this->set('PasswordReminders', $data);
+           $this->set('error', 'aaaaa');
+           $this->render('ec/PasswordReminders/password_reset');
+       }
+
+       $this->User->set($data);
+       if ($this->User->validates()) {
+           if ($this->User->save()) {
+               $reminde['id'] = $data['passwordReminder']['id'];
+               $reminde['auth_flag'] = 1; 
+               $this->PasswordReminder->set($reminde);
+               if ($this->PasswordReminder->save()) {     
+                  return $this->redirect(
+                    array('controller' => 'PasswordReminders', 'action' => 'password_reset_complete')
+                  );
                }
-           } else {
-             return false;
            }
-         }
+       } else {
+         return false;
+       }
+     }
 
-         if (empty($this->Session->read('key'))) {
+     if (empty($this->Session->read('key'))) {
 
-               $this->set('error', 2);
-               $this->render('/PasswordReminders/password_reset_complete');
-         }
-         $this->Session->delete('key');
-         $this->set(compact( "user_id", "passwordReminder_id"));
-    }
+           $this->set('error', 2);
+           $this->render('/PasswordReminders/password_reset_complete');
+     }
+     $this->Session->delete('key');
+     $this->set(compact( "user_id", "passwordReminder_id"));
+  }
 
-    public function password_reset_complete() {
-    exit();
-    }
-    
+  public function password_reset_complete() {
+      $url = '/Users/mypage';
+      $this->redirect($url);
+  }
+  
  
 /**/
 /*登録箇所
@@ -306,75 +302,71 @@ class PasswordRemindersController extends AppController {
   /*
   /**/
   public function admin_regist() {
-      $this->layout = "default";
+    $this->layout = "default";
     if ($this->request->is(array('post', 'put'))) {
-
         //戻るボタン
         if (isset($this->request->data['back'])) {
-        if (!empty($this->request->data['Image'])) {
-            $this->Session->write('image', $this->request->data['Image']);
-        }
-            $this->_getParameter();
-            $options = array(
-                    'fields' => array(
-                            'Shop.id','Shop.name'
-                    ),
-                    'conditions' =>
-                    array(
-                            'delete_flag' => '0'
-                    ),
-                    'recursive'  => -1
-            );
-            $relatedShops = $this->Shop->find('all', $options);
-            foreach ($relatedShops as $key => $relatedShop) {
-                    $related[$relatedShop['Shop']['id']] = $relatedShop['Shop']['name'];
-            }
-            $this->set('related', $related);
+          if (!empty($this->request->data['Image'])) {
+              $this->Session->write('image', $this->request->data['Image']);
+          }
+          $this->_getParameter();
+          $options = array(
+                  'fields' => array(
+                          'Shop.id','Shop.name'
+                  ),
+                  'conditions' =>
+                  array(
+                          'delete_flag' => '0'
+                  ),
+                  'recursive'  => -1
+          );
+          $relatedShops = $this->Shop->find('all', $options);
+          foreach ($relatedShops as $key => $relatedShop) {
+                  $related[$relatedShop['Shop']['id']] = $relatedShop['Shop']['name'];
+          }
+          $this->set('related', $related);
 
-            $this->render('/Shops/admin_add');
+          $this->render('/Shops/admin_add');
         } elseif (isset($this->request->data['regist'])) {
-            $data = $this->request->data;
-            if (!empty($data['Image'])) {
-              $data['Shop']['image_flag'] = 1;
-              foreach ($data['Image'] as $key => $value) {
-                $data['Image'][$key]['partner_name'] = 'Shop';
-              }
+          $data = $this->request->data;
+          if (!empty($data['Image'])) {
+            $data['Shop']['image_flag'] = 1;
+            foreach ($data['Image'] as $key => $value) {
+              $data['Image'][$key]['partner_name'] = 'Shop';
             }
-            $this->Shop->set($data);
-            // 2. モデル[ModelName]のvalidatesメソッドを使ってバリデーションを行う。
-            if ($this->Shop->validates()) {
-                $this->Shop->save($data['Shop']);
-                $partner_id = $this->Shop->getLastInsertID();
-                if (!empty($data['Image'])) {
-                    foreach($data['Image'] as $key => $val){
-                        $cut = 1;//カットしたい文字数
-                        $val["url"] = substr( $val["url"] , $cut , strlen($val["url"])-$cut );
-                        $file = new File(WWW_ROOT.$val["url"]);
-                        $file->copy(WWW_ROOT."/files/updir/" . $val["tmp_name"],true);
-                        $file = new File(WWW_ROOT.$val["url"]);
-                        $file->delete();
-                        $data['Image'][$key]["url"] = "/files/updir/" . $val["tmp_name"];
-                        $data['Image'][$key]["partner_id"] = $partner_id;
-                    }
-                  foreach ($data['Image'] as $key => $value) {
-                    $this->Image->create(false);
-                    $this->Image->save($value);
+          }
+          $this->Shop->set($data);
+          // 2. モデル[ModelName]のvalidatesメソッドを使ってバリデーションを行う。
+          if ($this->Shop->validates()) {
+              $this->Shop->save($data['Shop']);
+              $partner_id = $this->Shop->getLastInsertID();
+              if (!empty($data['Image'])) {
+                  foreach($data['Image'] as $key => $val){
+                      $cut = 1;//カットしたい文字数
+                      $val["url"] = substr( $val["url"] , $cut , strlen($val["url"])-$cut );
+                      $file = new File(WWW_ROOT.$val["url"]);
+                      $file->copy(WWW_ROOT."/files/updir/" . $val["tmp_name"],true);
+                      $file = new File(WWW_ROOT.$val["url"]);
+                      $file->delete();
+                      $data['Image'][$key]["url"] = "/files/updir/" . $val["tmp_name"];
+                      $data['Image'][$key]["partner_id"] = $partner_id;
                   }
+                foreach ($data['Image'] as $key => $value) {
+                  $this->Image->create(false);
+                  $this->Image->save($value);
                 }
+              }
 
-              return $this->redirect(
-                array('controller' => 'Shops', 'action' => 'admin_index')
-              );
-            } else {
-                $this->set('data',$data);
-                $this->render('/Shops/admin_add');
-            }
+            return $this->redirect(
+              array('controller' => 'Shops', 'action' => 'admin_index')
+            );
+          } else {
+              $this->set('data',$data);
+              $this->render('/Shops/admin_add');
           }
         }
       }
-
-
-      
+    }
 
 /**/
 /*編集箇所
