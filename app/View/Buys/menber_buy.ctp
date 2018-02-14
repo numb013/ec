@@ -61,7 +61,7 @@ echo pr($member);
             
             
             <h4>配送先はコチラでよろしいでしょうか</h4>
-            <p><a href='/ec/users/user_edit'>変更する</a></p>
+            <p><a href='/users/user_edit'>変更する</a></p>
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                   <tr>
                     <th>お名前</th>

@@ -19,7 +19,7 @@
         </div>
       </div>
 
-        <?php echo $this->Form->create(array('type' => 'post', 'url' =>  '/carts/')); ?>
+        <?php echo $this->Form->create(array('type' => 'post', 'url' =>  '/Carts/')); ?>
       <div class="fh5co-copy col-md-12  text-center detail_tex">
         <div class="container detail_container">
             <div class="col-md-3 col-sm-3 text-center item-block">
@@ -91,7 +91,7 @@
     console.log(JSON.stringify(data));
     $.ajax({
       type: 'POST',
-      url: '/items/know_count',
+      url: '/Items/know_count',
       data: data,
       dataType: 'json',
       cache: false,

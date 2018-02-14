@@ -82,7 +82,7 @@
   <div class="col-md-offset-0 text-center fh5co-heading job-box" style="clear: both;">
     <?php foreach ($datas as $data): ?>
       <div class="job-memu">
-        <a href="/ec/items/detail/<?php echo $data['Item']['id']; ?>">
+        <a href="/Items/detail/<?php echo $data['Item']['id']; ?>">
           <div class="photo-cut">
             <?php echo $this->Html->image($data['Image'][0]['url'] ,array('width' => '100%' )); ?>
           </div>

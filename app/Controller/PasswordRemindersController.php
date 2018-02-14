@@ -54,7 +54,7 @@ class PasswordRemindersController extends AppController {
                      $user = $User_data['User'];
 
                  $key = $this->_getRandomString(32);
-                 $url = "http://localhost/ec/PasswordReminders/reset?key=". $key;
+                 $url = "http://localhost/PasswordReminders/reset?key=". $key;
 
                  $data['PasswordReminders']['user_id'] = $user['id'];
                  $data['PasswordReminders']['key'] = $key;
@@ -135,7 +135,7 @@ class PasswordRemindersController extends AppController {
           );
       } else {
                $this->set('error', 1);
-               $this->render('/ec/PasswordReminders/password_reset_complete');
+               $this->render('/PasswordReminders/password_reset_complete');
       }
     }
  
@@ -171,7 +171,7 @@ class PasswordRemindersController extends AppController {
          if (empty($this->Session->read('key'))) {
 
                $this->set('error', 2);
-               $this->render('/ec/PasswordReminders/password_reset_complete');
+               $this->render('/PasswordReminders/password_reset_complete');
          }
          $this->Session->delete('key');
          $this->set(compact( "user_id", "passwordReminder_id"));

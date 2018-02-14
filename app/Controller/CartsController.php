@@ -92,11 +92,11 @@ class CartsController extends AppController {
             $this->Session->write('Item.count', $items['count']);
         } else {
             $this->Session->delete('Item');
-            $this->render('/carts/index');
+            $this->render('/Carts/index');
         }
     } elseif ($para == 'form_menu') {
             $this->_getItem();
-            $this->render('/carts/index');
+            $this->render('/Carts/index');
     } else {
 
 //exit('ssss');

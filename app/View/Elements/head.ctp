@@ -5,7 +5,7 @@
 <!--
                                 <h1 itemprop="name">
                                     <?php if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs'): ?>
-                                      <a href="/ec/">
+                                      <a href="/">
                                     <?php else: ?>
                                       <a href="/">
                                     <?php endif; ?>
@@ -15,15 +15,15 @@
 -->
 				<nav role="navigation">
                                     <ul id="menu">
-                                        <li><a href="/ec/items">online shop</a></li>
-                                        <li><a href="/ec/carts/index/form_menu">カート</a></li>
-                                        <li><a href="/ec/shops">Store</a></li>
-                                        <li><a href="/ec/Contacts">Contact</a></li>
+                                        <li><a href="/Items">online shop</a></li>
+                                        <li><a href="/Carts/index/form_menu">カート</a></li>
+                                        <li><a href="/Shops">Store</a></li>
+                                        <li><a href="/Contacts">Contact</a></li>
                                         <?php if(!empty($member)): ?> 
-                                            <li><a href="/ec/users/mypage">マイページ</a></li>
-                                            <li><a href="/ec/users/logout">ログアウト</a></li>
+                                            <li><a href="/users/mypage">マイページ</a></li>
+                                            <li><a href="/users/logout">ログアウト</a></li>
                                         <?php else: ?>
-                                            <li><a href="/ec/users/login">ログイン</a></li>
+                                            <li><a href="/users/login">ログイン</a></li>
                                         <?php endif; ?>
                                     </ul>
 				</nav>

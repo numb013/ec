@@ -7,14 +7,14 @@
         <div class="row">
             <div style="text-align:center">
                 <p>無効なアドレスです。</p>
-                <p><a href="/ec/Users/login">ログイン画面</a></p>
+                <p><a href="/Users/login">ログイン画面</a></p>
             </div>
         </div>
       <?php elseif($error == 2): ?>
         <div class="row">
             <div style="text-align:center">
                 <p>不正なアクセスです。</p>
-                <p><a href="/ec/Users/login">ログイン画面</a></p>
+                <p><a href="/Users/login">ログイン画面</a></p>
             </div>
         </div>
       <?php endif; ?>
@@ -23,7 +23,7 @@
             <div style="text-align:center">
                 <h2>Thank You!</h2>
                 <p>パスワード再設定が完了致しました。</p>
-                <p><a href="/ec/Users/login">ログイン画面</a></p>
+                <p><a href="/Users/login">ログイン画面</a></p>
             </div>
         </div>
 <?php endif; ?>

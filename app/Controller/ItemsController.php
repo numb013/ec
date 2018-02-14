@@ -65,7 +65,7 @@ class ItemsController extends AppController {
 		}
 		$this->_getParameter();
 		$this->set('datas',$datas);
-    $this->render('/items/index');
+    $this->render('/Items/index');
 	}
 
   public function search_more($para = null) {
@@ -73,7 +73,7 @@ class ItemsController extends AppController {
 		$this->_getParameter();
 		$back_flag = 1;
     $this->set(compact('datas', 'para', 'param', 'back_flag'));
-    $this->render('/items/search_more');
+    $this->render('/Items/search_more');
 	}
 
 

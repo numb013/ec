@@ -8,7 +8,7 @@
                 <div class="col-md-offset-0 text-center fh5co-heading" style="clear: both;">
                   <?php foreach ($datas as $key => $data): ?>
                     <div class="job-memu">
-                      <a href="/ec/items/detail/<?php echo $data['Item']['id']; ?>">
+                      <a href="/items/detail/<?php echo $data['Item']['id']; ?>">
                         <div class="photo-cut">
                           <?php echo $this->Html->image($data['Image'][0]['url'] ,array('width' => '50%' )); ?>
                         </div>
@@ -47,7 +47,7 @@
                                )); ?>
                             </p>
                           </div>
-                        <a href="/ec/carts/index/delete/<?php echo $data['Item']['id']; ?>" class="btn">削除<?php echo $data['Item']['id']; ?></a>
+                        <a href="/Carts/index/delete/<?php echo $data['Item']['id']; ?>" class="btn">削除<?php echo $data['Item']['id']; ?></a>
                     </div>
                   <?php echo $this->Form->hidden('Item.'.$key.'.id', array('value' => $data['Item']['id'])); ?>
                   <?php endforeach; ?>
@@ -86,7 +86,7 @@
     console.log(JSON.stringify(data));
     $.ajax({
       type: 'POST',
-      url: '/ec/carts/buy_count',
+      url: '/Carts/buy_count',
       data: data,
       dataType: 'json',
       cache: false,

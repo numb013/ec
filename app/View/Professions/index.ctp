@@ -61,7 +61,7 @@
 
     <?php foreach ($datas as $data): ?>
       <div class="job-memu">
-        <a href="/ec/professions/detail/<?php echo $data['Profession']['id']; ?>">
+        <a href="/professions/detail/<?php echo $data['Profession']['id']; ?>">
           <div class="photo-cut">
             <?php echo $this->Html->image($data['Image'][0]['url'] ,array('width' => '100%' )); ?>
           </div>

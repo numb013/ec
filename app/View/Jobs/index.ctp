@@ -88,7 +88,7 @@
       <div class="job-memu animate-box sss">
 
         <?php if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs'): ?>
-          <a href="/ec/professions/detail/<?php echo $data['Profession']['id']; ?>/1">
+          <a href="/professions/detail/<?php echo $data['Profession']['id']; ?>/1">
         <?php else: ?>
           <a href="/professions/detail/<?php echo $data['Profession']['id']; ?>/1">
         <?php endif; ?>

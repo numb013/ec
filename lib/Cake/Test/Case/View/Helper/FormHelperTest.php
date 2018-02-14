@@ -8027,7 +8027,7 @@ class FormHelperTest extends CakeTestCase {
 		);
 		$this->assertTags($result, array(
 			'form' => array(
-				'method' => 'post', 'action' => '/items/delete/10',
+				'method' => 'post', 'action' => '/Items/delete/10',
 				'name' => 'preg:/post_\w+/', 'id' => 'preg:/post_\w+/', 'style' => 'display:none;'
 			),
 			'input' => array('type' => 'hidden', 'name' => '_method', 'value' => 'POST'),

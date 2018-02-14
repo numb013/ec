@@ -12,7 +12,7 @@
                         <p>合計価格：<?php echo $value['Item']['total_price'] ;?>円</p>
                         <p>価格：<?php echo $value['Item']['price'] ;?></p>
                         <p>サイズ：<?php echo $value['Item']['size'] ;?></p>
-                        <a href="/ec/carts/index/delete/<?php echo $value['Item']['id']; ?>" class="btn">削除</a>
+                        <a href="/Carts/index/delete/<?php echo $value['Item']['id']; ?>" class="btn">削除</a>
                     </td>
                   </tr>
                 <?php endforeach; ?>
