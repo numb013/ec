@@ -420,9 +420,12 @@ public function admin_edit($id = null){
       // 2. モデル[ModelName]のvalidatesメソッドを使ってバリデーションを行う。
       if ($this->Item->validates()) {
         //画像削除チェックの入ったものを削除
+        $delete_count = count($this->Session->read('delete_image'));
         if (!empty($this->request->data['Check'])) {
           foreach ($this->request->data['Check'] as $key => $Checkd) {
             if ($Checkd['photo'] != '0') {
+              $delete_count++;
+              $this->Session->write('delete_image.'.$delete_count, $Checkd['photo']);
               foreach ($this->request->data['Image'] as $key => $Images) {
                 if ($Images['url'] == $Checkd['photo']) {
                     unset($this->request->data['Image'][$key]);
@@ -619,16 +622,13 @@ public function admin_edit($id = null){
         $this->Item->set($data);
         // 2. モデル[ModelName]のvalidatesメソッドを使ってバリデーションを行う。
         if ($this->Item->validates()) {
-
-echo pr($data['Item']);
-exit();
-
-            
             $this->Item->save($data['Item']);
             $partner_id = $data['Item']['id'];
+            $delete_image = $this->Session->read('delete_image');
+            $this->Session->delete('delete_image');
 
-            if (!empty($data['photo_dele'])) {
-              $data['photo_dele'] = array_merge($data['photo_dele']);
+            if (!empty($delete_image)) {
+              $data['photo_dele'] = array_merge($delete_image);
             }
 
             //画像削除
@@ -644,8 +644,6 @@ exit();
                 $this->Image->create();
               }
             }
-
-
 
             if (!empty($data['Image'])) {
               foreach($data['Image'] as $key => $val){
