@@ -1,12 +1,4 @@
 <div class="users form">
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <?php echo $this->Flash->render('auth'); ?>
 <?php echo $this->Form->create('User'); ?>
     <fieldset>
